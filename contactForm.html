@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Contact Hayden Business Services</title>
+
+<style>
+
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background:#f4f4f4;
+    margin:0;
+}
+
+header{
+    background:#003366;
+    color:white;
+    text-align:center;
+    padding:25px;
+}
+
+.container{
+    width:60%;
+    margin:40px auto;
+    background:white;
+    padding:30px;
+    border-radius:8px;
+    box-shadow:0px 0px 10px rgba(0,0,0,.15);
+}
+
+label{
+    display:block;
+    margin-top:15px;
+    font-weight:bold;
+}
+
+input, select, textarea{
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    border:1px solid #ccc;
+    border-radius:4px;
+}
+
+button{
+    margin-top:20px;
+    padding:12px 20px;
+    background:#003366;
+    color:white;
+    border:none;
+    border-radius:4px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#0055aa;
+}
+
+footer{
+    text-align:center;
+    margin-top:40px;
+    color:#666;
+}
+
+</style>
+
+<script>
+
+function validateForm(){
+
+    let name = document.forms["contactForm"]["contactName"].value;
+    let email = document.forms["contactForm"]["contactEmail"].value;
+    let reason = document.forms["contactForm"]["contactReason"].value;
+    let comments = document.forms["contactForm"]["comments"].value;
+
+    if(name == "" || email == "" || reason == "" || comments == ""){
+        alert("All fields must be filled out.");
+        return false;
+    }
+
+    return true;
+}
+
+</script>
+
+</head>
+
+<body>
+
+<header>
+<h1>Hayden Business Services</h1>
+<p>Contact Us</p>
+</header>
+
+<div class="container">
+
+<form name="contactForm" action="formHandler.php" method="post" onsubmit="return validateForm()">
+
+<label>Contact Name</label>
+<input type="text" name="contactName" required>
+
+<label>Contact Email Address</label>
+<input type="email" name="contactEmail" required>
+
+<label>Reason For Contact</label>
+<select name="contactReason" required>
+
+<option value="">Select a reason</option>
+<option value="General Question">General Question</option>
+<option value="Customer Support">Customer Support</option>
+<option value="Business Inquiry">Business Inquiry</option>
+<option value="Website Feedback">Website Feedback</option>
+
+</select>
+
+<label>Comments</label>
+<textarea name="comments" rows="6" required></textarea>
+
+<button type="submit">Submit</button>
+
+</form>
+
+</div>
+
+<footer>
+<p>© 2026 Hayden Business Services</p>
+</footer>
+
+</body>
+</html>
