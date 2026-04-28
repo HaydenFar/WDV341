@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8" />
+<title>DMACC Program Interest Form</title>
+
+<style>
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f2f6fa;
+        margin: 0;
+        padding: 20px;
+    }
+
+    form {
+        width: 650px;
+        margin: auto;
+        background-color: #ffffff;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.15);
+    }
+
+    legend {
+        font-size: 1.4em;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    label {
+        display: inline-block;
+        width: 200px;
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    select,
+    textarea {
+        width: 350px;
+        padding: 6px;
+        margin-bottom: 12px;
+    }
+
+    textarea {
+        height: 100px;
+    }
+
+    .buttons {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    input[type="submit"],
+    input[type="reset"] {
+        padding: 10px 20px;
+        font-size: 1em;
+        margin: 5px;
+    }
+</style>
+
+</head>
+
+<body>
+
+<h1>DMACC Program Interest Form</h1>
+<p>Please complete the form below and we will follow up with additional information.</p>
+
+<form id="form1" name="form1" method="post" action="formHandler.php">
+
+    <legend>Student Information</legend>
+
+    <p>
+        <label for="first_name">First Name:</label>
+        <input type="text" name="first_name" id="first_name" required />
+    </p>
+
+    <p>
+        <label for="last_name">Last Name:</label>
+        <input type="text" name="last_name" id="last_name" required />
+    </p>
+
+    <p>
+        <label for="email">Customer Email:</label>
+        <input type="email" name="email" id="email" required />
+    </p>
+
+    <p>
+        <label>Academic Standing:</label>
+        <input type="radio" name="academic_standing" value="High School" required> High School
+        <input type="radio" name="academic_standing" value="Freshman"> Freshman
+        <input type="radio" name="academic_standing" value="Sophomore"> Sophomore
+    </p>
+
+    <p>
+        <label for="major">Intended Major:</label>
+        <select name="major" id="major">
+            <option value="">-- Select a Major --</option>
+            <option value="CIS">Computer Information Systems</option>
+            <option value="GD">Graphic Design</option>
+            <option value="WDV">Web Development</option>
+        </select>
+    </p>
+
+    <p>
+        <label>Additional Options:</label>
+        <input type="checkbox" name="contact_info" value="Please contact me with program information">
+            Please contact me with program information<br>
+        <input type="checkbox" name="advisor_request" value="I would like to contact a program advisor">
+            I would like to contact a program advisor
+    </p>
+
+    <p>
+        <label for="comments">Comments:</label>
+        <textarea name="comments" id="comments"></textarea>
+    </p>
+
+    ///Honeypot field
+    <p style="display:none;">
+        If you are human, leave this field empty:
+        <input type="text" name="website" value="">
+    </p>
+
+    <div class="buttons">
+        <input type="submit" value="Submit" />
+        <input type="reset" value="Reset" />
+    </div>
+
+</form>
+
+</body>
+</html>

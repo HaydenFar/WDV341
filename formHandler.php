@@ -1,59 +1,89 @@
-<?php
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8" />
+<title>DMACC Form Confirmation</title>
 
-require 'sendEmail.php';
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-    $name = htmlspecialchars(trim($_POST["contactName"]));
-    $email = filter_var(trim($_POST["contactEmail"]), FILTER_VALIDATE_EMAIL);
-    $reason = htmlspecialchars(trim($_POST["contactReason"]));
-    $comments = htmlspecialchars(trim($_POST["comments"]));
-    $date = date("m/d/Y");
-
-    if (!$email) {
-        die("Invalid email address.");
+<style>
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f2f6fa;
+        padding: 20px;
     }
 
-    // Email sent to you
-    $yourEmail = "hmfarmer101@gmail.com";
+    .container {
+        width: 650px;
+        margin: auto;
+        background-color: #ffffff;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.15);
+    }
 
-    $adminSubject = "New Contact Form Submission";
+    h1 {
+        text-align: center;
+    }
+</style>
 
-    $adminBody = "
-    <h2>New Contact Submission</h2>
-    <ul>
-        <li><strong>Date:</strong> $date</li>
-        <li><strong>Name:</strong> $name</li>
-        <li><strong>Email:</strong> $email</li>
-        <li><strong>Reason:</strong> $reason</li>
-        <li><strong>Comments:</strong> $comments</li>
-    </ul>
-    ";
+</head>
 
-    sendEmail($yourEmail, $adminSubject, $adminBody);
+<body>
 
-    // Confirmation email to customer
+<div class="container">
 
-    $customerSubject = "We Received Your Message";
+<?php
+require_once("functions.php");
 
-    $customerBody = "
-    <html>
-    <body style='font-family:Arial; background:#f4f4f4; padding:20px;'>
-        <div style='background:white; padding:20px; border-radius:8px;'>
-            <h2>Thank You, $name!</h2>
-            <p>We received your message on $date.</p>
-            <p><strong>Reason:</strong> $reason</p>
-            <p><strong>Your Message:</strong></p>
-            <p>$comments</p>
-            <br>
-            <p>We will get back to you shortly.</p>
-        </div>
-    </body>
-    </html>
-    ";
+// Only process POST requests
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    sendEmail($email, $customerSubject, $customerBody);
+    // Honeypot
+    if (!empty($_POST['website'])) {
+        echo "<h1>Form Submission Failed</h1>";
+        echo "<p>Bot activity detected. Submission blocked.</p>";
+        exit;
+    }
 
-    echo "<h2>Thank you! Your message has been sent.</h2>";
+    // Safe values
+    $first = htmlspecialchars($_POST['first_name']);
+    $standing = htmlspecialchars($_POST['academic_standing']);
+    $major = htmlspecialchars($_POST['major']);
+    $email = htmlspecialchars($_POST['email']);
+
+    $contactInfo = isset($_POST['contact_info']) ? htmlspecialchars($_POST['contact_info']) : "";
+    $advisorRequest = isset($_POST['advisor_request']) ? htmlspecialchars($_POST['advisor_request']) : "";
+
+    $comments = htmlspecialchars($_POST['comments']);
+
+    echo "<h1>Thank You!</h1>";
+
+    echo "<p>Dear $first,</p>";
+
+    echo "<p>Thank you for your interest in DMACC.</p>";
+
+    echo "<p>We have you listed as a <strong>$standing</strong> starting this fall.</p>";
+
+    echo "<p>You have declared <strong>$major</strong> as your major.</p>";
+
+    echo "<p>Based upon your responses we will provide the following information in our confirmation email to you at <strong>$email</strong>.</p>";
+
+    if ($contactInfo !== "") {
+        echo "<p>$contactInfo</p>";
+    }
+
+    if ($advisorRequest !== "") {
+        echo "<p>$advisorRequest</p>";
+    }
+
+    echo "<p>You have shared the following comments which we will review:</p>";
+    echo "<p><em>$comments</em></p>";
+
+} else {
+    echo "<h1>Invalid Request</h1>";
+    echo "<p>Please return to the form page.</p>";
 }
 ?>
+
+</div>
+
+</body>
+</html>
