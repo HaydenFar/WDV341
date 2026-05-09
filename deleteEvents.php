@@ -2,35 +2,36 @@
 session_start();
 require 'dbConnect.php';
 
-// CSRF check
-if (!isset($_GET['token']) || $_GET['token'] !== $_SESSION['token']) {
-    header("Location: events.php?msg=error&text=Invalid+security+token");
+// Must be logged in
+if (empty($_SESSION['validUser'])) {
+    header("Location: login.php");
     exit;
 }
 
 // Validate ID
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-    header("Location: events.php?msg=error&text=Invalid+event+ID");
+    header("Location: adminViewEvents.php?msg=error&text=Invalid+event+ID");
     exit;
 }
 
 $eventId = intval($_GET['id']);
 
 try {
-    $sql = "DELETE FROM events WHERE event_id = :id";
+    $sql = "DELETE FROM events WHERE events_id = :id";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':id', $eventId);
     $stmt->execute();
 
     if ($stmt->rowCount() > 0) {
-        header("Location: events.php?msg=success&text=Event+deleted+successfully");
+        header("Location: adminViewEvents.php?msg=success&text=Event+deleted+successfully");
     } else {
-        header("Location: events.php?msg=error&text=Event+not+found");
+        header("Location: adminViewEvents.php?msg=error&text=Event+not+found");
     }
     exit;
 
 } catch (PDOException $e) {
-    header("Location: events.php?msg=error&text=Database+error");
+    error_log("Delete error: " . $e->getMessage());
+    header("Location: adminViewEvents.php?msg=error&text=Database+error");
     exit;
 }
 ?>

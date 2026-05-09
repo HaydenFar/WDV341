@@ -23,10 +23,15 @@ if (isset($_POST['loginSubmit'])) {
 
         if ($row && $password === $row['events_user_password']) {
             $_SESSION['validUser'] = true;
+
+            // Redirect to admin dashboard
+            header("Location: admin.php");
+            exit;
         } else {
             $_SESSION['validUser'] = false;
             $loginError = "Invalid username or password.";
         }
+
 
     } catch (PDOException $e) {
         die("Database error: " . $e->getMessage());
